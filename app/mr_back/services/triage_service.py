@@ -4,7 +4,7 @@ from models.VirtualTriage import VTTicket
 from typing import List
 
 # MongoDB connection
-uri = 'mongodb+srv://admin:admin@mrcluster.lrupm.mongodb.net/?retryWrites=true&w=majority&tlsAllowInvalidCertificates=true'
+uri = 'mongodb+srv://admin:admin@mrcluster.lrupm.mongodb.net/'
 client = MongoClient(uri)
 db = client['mr_data']
 tickets_collection = db['VTTickets']

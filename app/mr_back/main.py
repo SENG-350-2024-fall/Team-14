@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 app.include_router( auth_router, prefix="/auth" )
-app.include_router( triage_router, prefix="/triage")
+app.include_router( triage_router, prefix="/api")
 
 
 @app.get( '/' )
