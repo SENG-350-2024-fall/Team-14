@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, HTTPException
 from models.VirtualTriage import VTTicket
 from services.triage_service import get_tickets, create_ticket, update_ticket, delete_ticket
 from typing import List
@@ -7,7 +7,10 @@ router = APIRouter()
 
 @router.get("/tickets", response_model=List[VTTicket])
 async def get_all_tickets():
-    return await get_tickets()
+    tickets = await get_tickets()
+    if not tickets:
+        raise HTTPException(status_code=404, detail="No tickets found")
+    return tickets
 
 @router.post("/tickets", response_model=VTTicket)
 async def create_new_ticket(ticket: VTTicket):

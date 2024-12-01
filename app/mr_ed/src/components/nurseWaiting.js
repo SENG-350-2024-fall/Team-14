@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
+import { ClipLoader } from 'react-spinners';
 
 const NurseWaiting = () => {
   const [tickets, setTickets] = useState([]);
@@ -11,17 +12,17 @@ const NurseWaiting = () => {
   const createMedicalTicket = () => {
     const data = {
       'VTticketID': selectedTicket.ticketID,
-      'priority': parseInt( priority ),
+      'priority': parseInt(priority),
       'startTime': new Date().toString()
-    }
-    console.log( data )
-    axios.post( 'http://localhost:8000/medical/ticket', data )
-    .then(response => {
-      console.log("Ticket created:", response.data);
-      setSelectedTicket(null);
-    })
-    .catch(error => console.error("Error creating ticket:", error));
-  }
+    };
+    console.log(data);
+    axios.post('http://localhost:8000/medical/ticket', data)
+      .then(response => {
+        console.log("Ticket created:", response.data);
+        setSelectedTicket(null);
+      })
+      .catch(error => console.error("Error creating ticket:", error));
+  };
 
   useEffect(() => {
     axios.get('http://localhost:8000/triage/tickets')
@@ -35,17 +36,23 @@ const NurseWaiting = () => {
   const renderSymptoms = (symptoms) => (
     <div>
       {Object.entries(symptoms).map(([symptom, value]) => (
-        <Row>
-          <Col key={symptom}>
+        <Row key={symptom}>
+          <Col>
             {symptom}: {value ? "Yes" : "No"}
-         </Col>
+          </Col>
         </Row>
       ))}
     </div>
   );
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="patient-waiting" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', textAlign: 'center' }}>
+        <h1>Nurse Waiting Screen</h1>
+        <p>Please wait for incoming patient triage forms.</p>
+        <ClipLoader color="#3498db" loading={true} size={150} />
+      </div>
+    );
   }
 
   if (selectedTicket) {
@@ -61,14 +68,14 @@ const NurseWaiting = () => {
             width: '80%',
             textAlign: 'center',
             transition: 'transform 0.2s, background-color 0.2s',
-            }}>
-              <h2>Ticket Details</h2>
-              <p><strong>Ticket ID:</strong> {selectedTicket.ticketID}</p>
+          }}>
+            <h2>Ticket Details</h2>
+            <p><strong>Ticket ID:</strong> {selectedTicket.ticketID}</p>
             <p><strong>User:</strong> {selectedTicket.user}</p>
-            <p><strong>Emergency Department:</strong> {selectedTicket.ED}</p>
+            <p><strong>Emergency Department:</strong> {selectedTicket.ED.name}</p>
             <p><strong>Duration of Symptoms:</strong> {selectedTicket.durationOfSymptoms}</p>
-            <p><strong>Allergies:</strong> {selectedTicket.listAllergies.join(', ')}</p>
-            <p><strong>Past Medical Conditions:</strong> {selectedTicket.pastMedicalConditions.join(', ')}</p>
+            <p><strong>Allergies:</strong> {selectedTicket.listAllergies}</p>
+            <p><strong>Past Medical Conditions:</strong> {selectedTicket.pastMedicalConditions}</p>
 
             <h3>General Symptoms</h3>
             {renderSymptoms(selectedTicket.generalSymptoms)}
@@ -101,7 +108,7 @@ const NurseWaiting = () => {
             <p><strong>Timestamp:</strong> {new Date(selectedTicket.timestamp).toLocaleString()}</p>
 
             <p><strong>Select the priority:</strong></p>
-            <Form.Select value={ priority } onChange={ (e) => setPriority( e.target.value ) }>
+            <Form.Select value={priority} onChange={(e) => setPriority(e.target.value)}>
               <option value="1">High</option>
               <option value="2">Medium</option>
               <option value="3">Low</option>

@@ -5,6 +5,9 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import '../styles/Homepage.css'
 
+
+function Homepage() {
+    
 const mockDepartments = [
     {
         establishmentID: 101,
@@ -47,8 +50,6 @@ const mockDepartments = [
         name: "Pediatrics"
     }
 ];
-
-function Homepage() {
     const [userData, setUserData] = useState(null);
     useEffect(() => {
         // Fetch user data from the API endpoint

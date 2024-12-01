@@ -49,8 +49,8 @@ function Login() {
                             <InputGroup className="mb-3">
                                 <InputGroup.Text id="basic-addon1"></InputGroup.Text>
                                 <Form.Control
-                                    placeholder="Username"
-                                    aria-label="Username"
+                                    placeholder="Email"
+                                    aria-label="Email"
                                     aria-describedby="basic-addon1"
                                     onChange={e => setEmail(e.target.value)}
                                 />
