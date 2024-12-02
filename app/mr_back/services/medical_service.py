@@ -24,8 +24,8 @@ async def create_med_service( medTicket: MedicalTicket ):
 
 async def get_mt_service() -> List[MedicalTicket]:
     try:
-        tickets = list(ticket_collection.find({}, {'_id': 0}).sort("priority", 1))
-        return tickets
+        tickets = list(ticket_collection.find({}, {'_id': 0}))
+        return [MedicalTicket(**ticket) for ticket in tickets]
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
     

@@ -19,8 +19,8 @@ const DoctorWaiting = () => {
   const renderSymptoms = (symptoms) => (
     <div>
       {Object.entries(symptoms).map(([symptom, value]) => (
-        <Row>
-          <Col key={symptom}>
+        <Row key={symptom}>
+          <Col>
             {symptom}: {value ? "Yes" : "No"}
          </Col>
         </Row>
@@ -51,35 +51,35 @@ const DoctorWaiting = () => {
             <p><strong>User:</strong> {selectedTicket.user}</p>
             <p><strong>Emergency Department:</strong> {selectedTicket.ED}</p>
             <p><strong>Duration of Symptoms:</strong> {selectedTicket.durationOfSymptoms}</p>
-            <p><strong>Allergies:</strong> {selectedTicket.listAllergies.join(', ')}</p>
-            <p><strong>Past Medical Conditions:</strong> {selectedTicket.pastMedicalConditions.join(', ')}</p>
+            <p><strong>Allergies:</strong> {selectedTicket.listAllergies ? selectedTicket.listAllergies.join(', ') : 'None'}</p>
+            <p><strong>Past Medical Conditions:</strong> {selectedTicket.pastMedicalConditions ? selectedTicket.pastMedicalConditions.join(', ') : 'None'}</p>
 
             <h3>General Symptoms</h3>
-            {renderSymptoms(selectedTicket.generalSymptoms)}
+            {renderSymptoms(selectedTicket.generalSymptoms || {})}
 
             <h3>Respiratory Symptoms</h3>
-            {renderSymptoms(selectedTicket.respiratorySymptoms)}
+            {renderSymptoms(selectedTicket.respiratorySymptoms || {})}
 
             <h3>Gastrointestinal Symptoms</h3>
-            {renderSymptoms(selectedTicket.gastrointestinalSymptoms)}
+            {renderSymptoms(selectedTicket.gastrointestinalSymptoms || {})}
 
             <h3>Neurological Symptoms</h3>
-            {renderSymptoms(selectedTicket.neurologicalSymptoms)}
+            {renderSymptoms(selectedTicket.neurologicalSymptoms || {})}
 
             <h3>Musculoskeletal Symptoms</h3>
-            {renderSymptoms(selectedTicket.musculoskeletalSymptoms)}
+            {renderSymptoms(selectedTicket.musculoskeletalSymptoms || {})}
 
             <h3>Cardiovascular Symptoms</h3>
-            {renderSymptoms(selectedTicket.cardiovascularSymptoms)}
+            {renderSymptoms(selectedTicket.cardiovascularSymptoms || {})}
 
             <h3>Skin Symptoms</h3>
-            {renderSymptoms(selectedTicket.skinSymptoms)}
+            {renderSymptoms(selectedTicket.skinSymptoms || {})}
 
             <h3>Psychological Symptoms</h3>
-            {renderSymptoms(selectedTicket.psychologicalSymptoms)}
+            {renderSymptoms(selectedTicket.psychologicalSymptoms || {})}
 
             <h3>Substance Habits</h3>
-            {renderSymptoms(selectedTicket.substanceHabits)}
+            {renderSymptoms(selectedTicket.substanceHabits || {})}
 
             <p><strong>Consent:</strong> {selectedTicket.consent ? "Yes" : "No"}</p>
             <p><strong>Timestamp:</strong> {new Date(selectedTicket.timestamp).toLocaleString()}</p>
